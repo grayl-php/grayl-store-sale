@@ -81,7 +81,7 @@
        *
        * @param string[] $tags An array of tags to use for finding discounts
        *
-       * @return ProductDiscount
+       * @return ?ProductDiscount
        */
       public function findProductDiscountFromTags ( array $tags ): ?ProductDiscount
       {

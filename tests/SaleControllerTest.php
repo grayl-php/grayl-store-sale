@@ -3,7 +3,6 @@
    namespace Grayl\Test\Sale;
 
    use Grayl\Store\Product\Entity\ProductDiscount;
-   use Grayl\Store\Product\ProductPorter;
    use Grayl\Store\Sale\Controller\SaleController;
    use Grayl\Store\Sale\SalePorter;
    use PHPUnit\Framework\TestCase;
@@ -17,24 +16,6 @@
    {
 
       /**
-       * Test setup for test environment
-       *
-       * @throws \Exception
-       */
-      public static function setUpBeforeClass (): void
-      {
-
-         // Change the product config file location to the test file
-         ProductPorter::getInstance()
-                      ->setConfigFile( 'test/store.product.php' );
-
-         // Change the sale config file location to the test file
-         SalePorter::getInstance()
-                   ->setConfigFile( 'test/store.sale.php' );
-      }
-
-
-      /**
        * Tests the creation of SaleController object
        *
        * @return SaleController
@@ -45,7 +26,7 @@
 
          // Create the test object
          $sale = SalePorter::getInstance()
-                           ->getSavedSaleController( 'test-sale' );
+                           ->getSavedSaleController( 'test' );
 
          // Check the type of object created
          $this->assertInstanceOf( SaleController::class,
@@ -67,7 +48,7 @@
       {
 
          // Perform some checks on the data
-         $this->assertEquals( 'test-sale',
+         $this->assertEquals( 'test',
                               $sale->getID() );
       }
 
@@ -84,7 +65,7 @@
       {
 
          // Search the SaleController for a ProductDiscount using a tag
-         $product_discount = $sale->findProductDiscountFromTags( [ 'test' ] );
+         $product_discount = $sale->findProductDiscountFromTags( [ 'test-tag' ] );
 
          // Check the type of object returned
          $this->assertInstanceOf( ProductDiscount::class,
