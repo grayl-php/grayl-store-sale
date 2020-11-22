@@ -18,9 +18,9 @@
   "type": "library",
   "version": "1.1.0",
   "require": {
-    "grayl/config": "^1",
-    "grayl/mixin-common": "^1",
-    "grayl/store-product": "^1",
+    "grayl/config": "^1.1",
+    "grayl/mixin-common": "^1.0",
+    "grayl/store-product": "^1.1",
     "php": "~7.4"
   },
   "require-dev": {
