@@ -5,8 +5,9 @@
    use Grayl\Config\ConfigPorter;
    use Grayl\Mixin\Common\Entity\KeyedDataBag;
    use Grayl\Mixin\Common\Traits\StaticTrait;
-   use Grayl\Store\Product\Entity\ProductDiscount;
    use Grayl\Store\Sale\Controller\SaleController;
+   use Grayl\Store\Sale\Entity\SaleData;
+   use Grayl\Store\Sale\Service\SaleService;
 
    /**
     * Front-end for the Product package
@@ -45,32 +46,6 @@
          // Create a KeyedDataBag for storing sales
          $this->saved_sales = new KeyedDataBag();
 
-         // Load all SaleControllers
-         $this->preloadSaleControllersFromConfigFolder();
-      }
-
-
-      /**
-       * Preloads all SaleControllers in the config folder
-       *
-       * @throws \Exception
-       */
-      private function preloadSaleControllersFromConfigFolder (): void
-      {
-
-         // Get the config folder path
-         $config_path = ConfigPorter::getInstance()
-                                    ->getConfigFolderDir() . $this->config_folder;
-
-         // Grab a list of files in the config folder
-         $files = glob( $config_path . '/*.php' );
-
-         // Loop through each file
-         foreach ( $files as $file ) {
-            // Load the sale from the file
-            $this->getSavedSaleController( basename( $file,
-                                                     '.php' ) );
-         }
       }
 
 
@@ -125,29 +100,22 @@
 
 
       /**
-       * Searches all SaleController entities from an array of multiple tags to find ProductDiscount
+       * Creates a new SaleController
        *
-       * @param string[] $tags An array of tags to use for finding discounts
+       * @param string $id The unique ID of the sale
        *
-       * @return ?ProductDiscount
+       * @return SaleController
        */
-      public function findProductDiscountFromTags ( array $tags ): ?ProductDiscount
+      public function newSaleController ( string $id ): SaleController
       {
 
-         // Loop through each SaleController
-         /** @var SaleController $sale */
-         foreach ( $this->saved_sales->getVariables() as $id => $sale ) {
-            // Check for discounts
-            $product_discount = $sale->findProductDiscountFromTags( $tags );
+         // Create the SaleData object
+         $sale_data = new SaleData( $id );
 
-            // If a discount was found, return it
-            if ( ! empty( $product_discount ) ) {
-               return $product_discount;
-            }
-         }
+         // Return a new SaleController
+         return new SaleController( $sale_data,
+                                    new SaleService() );
 
-         // Nothing found
-         return null;
       }
 
    }
