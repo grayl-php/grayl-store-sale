@@ -62,6 +62,22 @@
 
 
       /**
+       * Sets a single ProductDiscount
+       *
+       * @param string          $product_tag      The product tag the discount applies to
+       * @param ProductDiscount $product_discount The ProductDiscount entity
+       */
+      public function setProductDiscount ( string $product_tag,
+                                           ProductDiscount $product_discount ): void
+      {
+
+         // Set the discount
+         $this->sale_data->setProductDiscount( $product_tag,
+                                               $product_discount );
+      }
+
+
+      /**
        * Searches a SaleData object to find ProductDiscount from a single tag
        *
        * @param string $tag A single tag to find a ProductDiscount for

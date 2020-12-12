@@ -8,7 +8,7 @@
    use PHPUnit\Framework\TestCase;
 
    /**
-    * Test class for the Product package
+    * Test class for the Sale package
     *
     * @package Grayl\Store\Sale
     */
